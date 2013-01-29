@@ -912,11 +912,26 @@
         }
     }
     
+    function findPos(obj) {
+        var curleft = 0;
+        var curtop = 0;
+
+        while( obj != null )
+        {
+            curleft += obj.offsetLeft ;
+            curtop += obj.offsetTop ;
+            obj = obj.offsetParent ;
+        }
+
+        return [curleft,curtop];
+    }
+
     function mouseClicked(e) {
-        var leftOffset = $('#game-field').offset().left;
-        var topOffset = $('#game-field').offset().top;
-        mouseX = e.pageX - leftOffset;
-        mouseY = e.pageY - topOffset;
+        
+        var canvasPosition = findPos(canvasField);
+
+        mouseX = e.pageX - canvasPosition[0];
+        mouseY = e.pageY - canvasPosition[1];
         if (!isPlaying && !stopGame) {
             if (btnPlay.checkClicked()) {
                 playGame();
